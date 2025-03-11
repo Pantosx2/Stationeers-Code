@@ -1,0 +1,21 @@
+pin analyzer d0;
+pin mixer d1;
+
+const maxPressure = 40000;
+
+void Main()
+{
+    while (true)
+    {
+        var pressure = analyzer.Pressure;
+        if (pressure < maxPressure)
+        {
+            mixer.Setting = 33.33333333;
+            mixer.On = 1;
+        }
+        else
+        {
+            mixer.On = 0;
+        }
+    }
+}

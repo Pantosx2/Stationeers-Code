@@ -1,0 +1,33 @@
+
+pin SunSensor d0;
+
+const Panel = -1545574413;
+const PanelS = "PanelS";
+const PanelN = "PanelN";
+
+void Main()
+{
+    var hor = 0;
+    var ver = 0;
+    var hor2 = 0;
+
+    while (true)
+    {
+        yield;
+        hor = SunSensor.Horizontal;
+        ver = SunSensor.Vertical;
+        ver = 90 - ver;
+        hor = hor + 90;
+
+        // Night
+        if (hor >= 180 | hor < 0)
+        {
+            hor = 0;
+        }
+
+        hor2 = hor - 180;
+        DevicesOfType(Panel).WithName(PanelS).Horizontal = hor2;
+        DevicesOfType(Panel).WithName(PanelN).Horizontal = hor;
+        DevicesOfType(Panel).Vertical = ver;
+    }
+}

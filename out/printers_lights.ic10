@@ -1,0 +1,21 @@
+beqz 1 20
+yield
+lbn r0 321604921 -1973931577 Setting Maximum
+sb -1009150565 On r0
+sb -2020231820 On r0
+sb 336213101 On r0
+sb -1888248335 On r0
+sb 1307165496 On r0
+sb -465741100 On r0
+sb -641491515 On r0
+sb 1781051034 On r0
+lbn r1 321604921 -1887051411 Setting Maximum
+move r0 r1
+seq r0 r0 0
+beqz r0 17
+sb 555215790 On 0
+j 19
+lb r0 322782515 Activate Maximum
+sb 555215790 On r0
+j 0
+j 9999

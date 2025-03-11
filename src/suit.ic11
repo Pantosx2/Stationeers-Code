@@ -1,0 +1,14 @@
+pin suit db;
+pin healmet d0;
+pin jetpack d1;
+
+void Main()
+{
+    while(true)
+    {
+        var healmetOpen = !healmet.Open;
+        suit.On = healmetOpen;
+        suit.Filtration = healmetOpen;
+        suit.AirRelease = healmetOpen;
+    }
+}

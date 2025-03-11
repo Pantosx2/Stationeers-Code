@@ -1,0 +1,106 @@
+
+alias sensor d0
+alias analyzer d1
+
+define valve -1280984102
+define vent -1129453144
+define filtration -348054045
+define pump -321403609
+
+define hot HASH("AC Valve Hot")
+define cold HASH("AC Valve Cold")
+define co2 HASH("Filtration CO2")
+define pol HASH("Filtration POL")
+define acV HASH("AC Vent")
+define acV2 HASH("AC Vent2")
+
+define pressureMax 110
+define pressureMin 90
+define tempMax 300
+define tempMin 298
+define ratioO2Min 0.2
+define ratioCO2Min 0.20
+define ratioPOLMax 0.00001
+define ratioNO2Max 0.00001
+
+define OUT 0
+define IN 1
+
+alias t r0
+alias tt r1
+alias temp r2
+alias pres r3
+alias pipePres r4
+alias pipeTemp r5
+alias ratioO2 r6
+alias ratioCO2 r7
+alias ratioPOL r8
+alias ratioNO2 r9
+
+loop:
+jal getAll
+jal setAll
+j loop
+
+getAll:
+l pres sensor Pressure
+l temp sensor Temperature
+l ratioO2 sensor RatioOxygen
+l ratioCO2 sensor RatioCarbonDioxide
+l ratioPOL sensor RatioPollutant
+l ratioNO2 sensor RatioNitrousOxide
+j ra
+
+setAll:
+#-----Atmosphere-----
+#Pump oxygen in if ratio is <20% or presssure is <90kPa
+slt t ratioO2 ratioO2Min
+slt tt pres pressureMin
+or t t tt
+beqz t ok
+sbn vent acV2 Mode OUT
+sbn vent acV2 On 1
+j skip
+ok:
+
+#Pump out air if pressure is >110kPa
+sgt t pres pressureMax
+beqz t ok2
+sbn vent acV2 Mode IN
+sbn vent acV2 On 1
+j skip
+ok2:
+
+sbn vent acV2 On 0
+skip:
+
+#Pump CO2 in if ratio is <20%
+slt t ratioCO2 ratioCO2Min
+sbn filtration co2 On t
+
+#Pump out Polutant and NO2 if either ratio is >1%
+sgt t ratioPOL ratioPOLMax
+sgt tt ratioNO2 ratioNO2Max
+or t t tt
+sbn filtration pol On t
+
+#-----Temperature-----
+#Conect radiator to cold if temp >27
+sgt t temp tempMax
+sbn valve cold On t
+
+#Conect ratiator to hot if temp <22
+slt tt temp tempMin
+sbn valve hot On tt
+
+#If temp OK make sure the radiator is in vaccum
+or t t tt
+bnez t end
+l pipePres analyzer Pressure
+beqz pipePres end
+
+sbn vent acV On 1
+sleep 3
+sbn vent acV On 0
+end:
+j ra

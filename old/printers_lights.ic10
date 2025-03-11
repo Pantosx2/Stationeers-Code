@@ -1,0 +1,40 @@
+define SWITCH 321604921
+define PRINTERSWITCH HASH("Printer Switch")
+
+define LIGHTSWITCH HASH("Light Switch")
+define OCCUP 322782515
+
+
+define LIGHT 555215790
+
+define SORTER -1009150565
+define STACKER -2020231820
+
+define AUTOLATHE 336213101
+define BENDER -1888248335
+define ELECTRONICS 1307165496
+define TOOLS -465741100
+define SECURITY -641491515
+define ROCKET 1781051034
+
+alias temp r0
+
+loop:
+yield
+lbn temp SWITCH PRINTERSWITCH Setting Maximum
+sb SORTER On temp
+sb STACKER On temp
+sb AUTOLATHE On temp
+sb BENDER On temp
+sb ELECTRONICS On temp
+sb TOOLS On temp
+sb SECURITY On temp
+sb ROCKET On temp
+
+lbn temp SWITCH LIGHTSWITCH Setting Maximum
+brnez temp 3
+sb LIGHT On 0
+j loop
+lb temp OCCUP Activate Maximum
+sb LIGHT On temp
+j loop

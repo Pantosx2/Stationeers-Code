@@ -1,0 +1,24 @@
+
+alias anal d0
+alias mixer d1
+
+alias pres r1
+alias temp r2
+
+define maxPres 40000
+
+loop:
+yield
+l pres anal Pressure
+blt pres maxPres ON
+j OFF
+
+ON:
+s mixer Setting 33.33333333
+s mixer On 1
+
+j loop
+
+OFF:
+s mixer On 0
+j loop

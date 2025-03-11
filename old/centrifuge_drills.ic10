@@ -1,0 +1,71 @@
+alias CC d0
+alias lev d1
+
+alias temp r0
+
+s CC On 0
+
+setup:
+yield
+s CC Open 1
+s CC CombustionLimiter 0
+s CC Throttle 0
+l temp CC Reagents
+bgt temp 0 setup
+l temp CC Stress
+bgt temp 0 setup
+l temp d1 Setting
+bnez temp setup
+s CC Open 0
+rpm:
+yield
+l temp CC Rpm
+bgt temp 0 rpm
+j startup
+
+startup:
+yield
+s CC On 1
+s CC Throttle 10
+s CC CombustionLimiter 10
+l temp CC Rpm
+brlt temp 250 -1
+s CC Throttle 20
+s CC CombustionLimiter 20
+l temp CC Rpm
+brlt temp 280 -1
+s CC Throttle 40
+s CC CombustionLimiter 40
+l temp CC Rpm
+brlt temp 340 -1
+s CC Throttle 60
+s CC CombustionLimiter 60
+l temp CC Rpm
+brlt temp 425 -1
+s CC Throttle 80
+s CC CombustionLimiter 80
+l temp CC Rpm
+brlt temp 470 -1
+s CC Throttle 100
+s CC CombustionLimiter 100
+l temp CC Rpm
+brlt temp 470 -1
+j main
+
+main:
+yield
+l temp lev Setting
+bnez temp shutdown
+l temp CC Reagents
+blt temp 500 main
+j shutdown
+
+shutdown:
+yield
+s CC Throttle 0
+s CC CombustionLimiter 0
+s CC On 0
+l temp CC Rpm
+bgt temp 0 shutdown
+s CC Open 1
+j setup

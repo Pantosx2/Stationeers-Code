@@ -1,0 +1,57 @@
+
+const PERCENTAGE = 1;
+const LED = -815193061;
+const BATDISP = "Battery Display";
+const ANALYZER = 1036015121;
+const ANALOUT = "Cable Analyzer Out";
+
+const BLUE = 0;
+const GREEN = 2;
+const ORANGE = 3;
+const RED = 4;
+const YELLOW = 5;
+
+// 5 Large Batteries, 1 Small Battery
+const MAXPOWER = 5 * 9000001 + 3600000;
+
+void Main()
+{
+    // Set the mode of the LED display to PERCENTAGE
+    DevicesOfType(LED).WithName(BATDISP).Mode = PERCENTAGE;
+
+    while(true)
+    {
+        yield;
+
+        // Get the power required from the analyzer
+        var powerRequired = DevicesOfType(ANALYZER).WithName(ANALOUT).PowerRequired.Maximum;
+
+        // Calculate the percentage of power required
+        var percentage = 1 - (powerRequired / MAXPOWER);
+
+        // Set the setting of the LED display
+        DevicesOfType(LED).WithName(BATDISP).Setting = percentage;
+
+        // Set the color of the LED display based on the percentage
+        var color = RED;
+        if (percentage > 0.26)
+        {
+            color = ORANGE;
+        }
+        if (percentage > 0.51)
+        {
+            color = YELLOW;
+        }
+        if (percentage > 0.76)
+        {
+            color = GREEN;
+        }
+        if (percentage > 0.99)
+        {
+            color = BLUE;
+        }
+
+        DevicesOfType(LED).WithName(BATDISP).Color = color;
+    }
+}
+

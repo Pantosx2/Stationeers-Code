@@ -1,0 +1,49 @@
+alias SunSensor d0
+alias ClockDisplay d1
+move r0 90
+move r1 90
+move r2 0
+move r3 0
+move r4 0
+move r5 0
+move r6 0
+move r7 0
+beqz 1 48
+yield
+sub r8 r0 r1
+move r6 r8
+div r8 720 r6
+move r7 r8
+l r8 SunSensor Vertical
+move r2 r8
+slt r8 r2 r1
+beqz r8 21
+move r1 r2
+sgt r8 r2 r0
+beqz r8 24
+move r0 r2
+sub r8 r2 r1
+move r2 r8
+sgt r8 r2 r3
+beqz r8 31
+add r8 r2 r6
+move r4 r8
+j 33
+sub r8 r6 r2
+move r4 r8
+mul r8 r4 r7
+move r4 r8
+div r8 r4 60
+floor r8 r8
+move r5 r8
+mod r8 r4 60
+floor r8 r8
+div r8 r8 100
+move r4 r8
+add r8 r5 r4
+move r5 r8
+s ClockDisplay Setting r5
+move r3 r2
+sleep 1
+j 10
+j 9999

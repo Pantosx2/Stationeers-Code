@@ -1,0 +1,26 @@
+
+alias this db
+
+define analyzer 435685051
+define o2 HASH("O2 Analyzer")
+
+define vent -1129453144
+define out HASH("O2 OverPres")
+
+define ACTIVE 1
+define IDLE 0
+
+define minPres 18000
+define maxPres 19500
+
+alias t r0
+alias pres r1
+
+
+loop:
+lbn pres analyzer o2 Pressure Maximum
+slt t pres minPres
+s this Mode t
+sgt t pres maxPres
+sbn vent out On t
+j loop

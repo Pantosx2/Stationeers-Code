@@ -1,0 +1,72 @@
+#Simple 24 hour clock based on the sun's vertical
+#position.
+
+#Device no 0 should be a daylight sensor
+alias sun d0
+
+#Device no 1 should be the display of time
+#I recomend a small LED display
+alias clock d1
+
+#Here you should put the max and min values of the
+#Vertical sun position at your planet.
+#Just take a look at the day light sensor when the
+#sun is at the top in the middle of the day and at
+#the bottom in the middle of the night and record
+#the values below.
+
+#If not sure put 90 for both values and the clock
+#will calibrate itself within a day
+alias maxSunAngle r6
+alias minSunAngle r7
+
+move maxSunAngle 90
+move minSunAngle 90
+
+#Nothing below here should be changed
+alias ver r0
+alias verOld r1
+alias minutes r2
+alias time r3
+
+alias dayDeg r4
+alias minutesPerDeg r5
+
+loop:
+sub dayDeg maxSunAngle minSunAngle
+div minutesPerDeg 720 dayDeg
+l ver sun Vertical
+bltal ver minSunAngle calMin
+bgtal ver maxSunAngle calMax
+sub ver ver minSunAngle
+bgt ver verOld day
+blt ver verOld night
+display:
+mul minutes minutes minutesPerDeg
+div time minutes 60
+floor time time
+mod minutes minutes 60
+floor minutes minutes
+div minutes minutes 100
+add time time minutes
+
+s clock Setting time
+move verOld ver
+sleep 1
+j loop
+
+day:
+add minutes ver dayDeg
+j display
+
+night:
+sub minutes dayDeg ver
+j display
+
+calMin:
+move minSunAngle ver
+j ra
+
+calMax:
+move maxSunAngle ver
+j ra

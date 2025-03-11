@@ -1,0 +1,23 @@
+sbn -815193061 -785062005 Mode 1
+beqz 1 22
+yield
+lbn r0 1036015121 311901890 PowerRequired Maximum
+div r0 r0 48600005
+sub r0 1 r0
+sbn -815193061 -785062005 Setting r0
+move r1 4
+sgt r2 r0 0.26
+beqz r2 11
+move r1 3
+sgt r2 r0 0.51
+beqz r2 14
+move r1 5
+sgt r2 r0 0.76
+beqz r2 17
+move r1 2
+sgt r0 r0 0.99
+beqz r0 20
+move r1 0
+sbn -815193061 -785062005 Color r1
+j 1
+j 9999

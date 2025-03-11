@@ -1,0 +1,41 @@
+pin this db;
+
+const analyzer = 435685051;
+const o2 = "O2 Analyzer";
+
+const vent = -1129453144;
+const out = "O2 OverPres";
+
+const ACTIVE = 1;
+const IDLE = 0;
+
+const IN = 1;
+const OUT = 0;
+
+const minPres = 18000;
+const maxPres = 19500;
+
+void Main()
+{
+    while (true)
+    {
+        var pres = DevicesOfType(analyzer).WithName(o2).Pressure.Maximum;
+        if (pres < minPres)
+        {
+            this.Mode = ACTIVE;
+        }
+        else 
+        {
+            this.Mode = IDLE;
+        }
+        if (pres > maxPres)
+        {
+            DevicesOfType(vent).WithName(out).Mode = OUT;
+            DevicesOfType(vent).WithName(out).On = 1;
+        }
+        else
+        {
+            DevicesOfType(vent).WithName(out).On = 0;
+        }
+    }
+}

@@ -1,0 +1,539 @@
+Compiling every *.ic11 file in directory ./src/
+
+
+ac.ic11
+
+alias sensor d0
+alias analyzer d1
+beqz 1 60
+yield
+l r0 sensor Pressure
+l r1 sensor Temperature
+l r2 sensor RatioOxygen
+l r3 sensor RatioCarbonDioxide
+l r4 sensor RatioPollutant
+l r5 sensor RatioNitrousOxide
+slt r2 r2 0.2
+slt r6 r0 90
+or r2 r2 r6
+beqz r2 17
+sbn -1129453144 -2009316918 Mode 0
+sbn -1129453144 -2009316918 On 1
+j 23
+sgt r0 r0 110
+beqz r0 22
+sbn -321403609 -2009316918 Mode 1
+sbn -321403609 -2009316918 On 1
+j 23
+sbn -321403609 -2009316918 On 0
+slt r0 r3 0.20
+beqz r0 27
+sbn -348054045 -1074943586 On 1
+j 28
+sbn -348054045 -1074943586 On 0
+sgt r0 r4 0.00001
+sgt r2 r5 0.00001
+or r0 r0 r2
+beqz r0 34
+sbn -348054045 372304012 On 1
+j 35
+sbn -348054045 372304012 On 0
+sgt r0 r1 299.15
+beqz r0 39
+sbn -1280984102 -1985635137 On 1
+j 42
+slt r0 r1 298.15
+beqz r0 42
+sbn -1280984102 -1985635137 On 0
+slt r0 r1 297.15
+beqz r0 46
+sbn -1280984102 1726240876 On 1
+j 49
+sgt r0 r1 298.15
+beqz r0 49
+sbn -1280984102 1726240876 On 0
+sgt r0 r1 297.15
+slt r1 r1 299.15
+and r0 r0 r1
+beqz r0 59
+l r0 analyzer Pressure
+sgt r0 r0 0
+beqz r0 58
+sbn -321403609 997285068 On 1
+j 59
+sbn -321403609 997285068 On 0
+j 2
+j 9999
+
+
+
+battery.ic11
+
+sbn -815193061 -785062005 Mode 1
+beqz 1 22
+yield
+lbn r0 1036015121 311901890 PowerRequired Maximum
+div r0 r0 48600005
+sub r0 1 r0
+sbn -815193061 -785062005 Setting r0
+move r1 4
+sgt r2 r0 0.26
+beqz r2 11
+move r1 3
+sgt r2 r0 0.51
+beqz r2 14
+move r1 5
+sgt r2 r0 0.76
+beqz r2 17
+move r1 2
+sgt r0 r0 0.99
+beqz r0 20
+move r1 0
+sbn -815193061 -785062005 Color r1
+j 1
+j 9999
+
+
+
+centrifuge_drills.ic11
+
+alias centrifuge d0
+alias lever d1
+jal 19
+jal 94
+jal 26
+jal 46
+beqz 1 18
+jal 19
+l r0 lever Setting
+sne r0 r0 0
+l r1 centrifuge Reagents
+sgt r1 r1 500
+or r0 r0 r1
+beqz r0 17
+jal 94
+jal 26
+jal 46
+j 6
+j 9999
+push ra
+yield
+l r0 lever Setting
+seqz r0 r0
+sb 265720906 On r0
+pop ra
+j ra
+push ra
+s centrifuge Open 1
+s centrifuge CombustionLimiter 0
+s centrifuge Throttle 0
+l r0 centrifuge Reagents
+sgt r0 r0 0
+l r1 centrifuge Stress
+sgt r1 r1 0
+or r0 r0 r1
+l r1 lever Setting
+sne r1 r1 0
+or r0 r0 r1
+l r1 centrifuge Rpm
+sgt r1 r1 0
+or r0 r0 r1
+beqz r0 44
+jal 19
+j 30
+pop ra
+j ra
+push ra
+s centrifuge Open 0
+s centrifuge On 1
+s centrifuge Throttle 10
+s centrifuge CombustionLimiter 10
+l r0 centrifuge Rpm
+slt r0 r0 250
+beqz r0 56
+jal 19
+j 51
+s centrifuge Throttle 20
+s centrifuge CombustionLimiter 20
+l r0 centrifuge Rpm
+slt r0 r0 280
+beqz r0 63
+jal 19
+j 58
+s centrifuge Throttle 40
+s centrifuge CombustionLimiter 40
+l r0 centrifuge Rpm
+slt r0 r0 340
+beqz r0 70
+jal 19
+j 65
+s centrifuge Throttle 60
+s centrifuge CombustionLimiter 60
+l r0 centrifuge Rpm
+slt r0 r0 425
+beqz r0 77
+jal 19
+j 72
+s centrifuge Throttle 80
+s centrifuge CombustionLimiter 80
+l r0 centrifuge Rpm
+slt r0 r0 470
+beqz r0 85
+yield
+jal 19
+j 79
+s centrifuge Throttle 100
+s centrifuge CombustionLimiter 100
+l r0 centrifuge Rpm
+slt r0 r0 470
+beqz r0 92
+jal 19
+j 87
+pop ra
+j ra
+push ra
+s centrifuge Throttle 0
+s centrifuge CombustionLimiter 0
+s centrifuge On 0
+l r0 centrifuge Rpm
+sgt r0 r0 0
+beqz r0 103
+jal 19
+j 98
+s centrifuge Open 1
+pop ra
+j ra
+
+
+
+clock.ic11
+
+alias SunSensor d0
+alias ClockDisplay d1
+move r0 90
+move r1 90
+move r2 0
+move r3 0
+move r4 0
+move r5 0
+move r6 0
+move r7 0
+beqz 1 48
+yield
+sub r8 r0 r1
+move r6 r8
+div r8 720 r6
+move r7 r8
+l r8 SunSensor Vertical
+move r2 r8
+slt r8 r2 r1
+beqz r8 21
+move r1 r2
+sgt r8 r2 r0
+beqz r8 24
+move r0 r2
+sub r8 r2 r1
+move r2 r8
+sgt r8 r2 r3
+beqz r8 31
+add r8 r2 r6
+move r4 r8
+j 33
+sub r8 r6 r2
+move r4 r8
+mul r8 r4 r7
+move r4 r8
+div r8 r4 60
+floor r8 r8
+move r5 r8
+mod r8 r4 60
+floor r8 r8
+div r8 r8 100
+move r4 r8
+add r8 r5 r4
+move r5 r8
+s ClockDisplay Setting r5
+move r3 r2
+sleep 1
+j 10
+j 9999
+
+
+
+fuel.ic11
+
+alias analyzer d0
+alias mixer d1
+beqz 1 11
+l r0 analyzer Pressure
+slt r0 r0 40000
+beqz r0 9
+s mixer Setting 33.33333333
+s mixer On 1
+j 10
+s mixer On 0
+j 2
+j 9999
+
+
+
+harvie.ic11
+
+alias Light d0
+alias Sun d1
+move r0 0
+beqz 1 31
+yield
+jal 42
+push 1
+jal 81
+pop r0
+seq r0 r0 -1
+beqz r0 12
+jal 49
+push 2
+jal 81
+pop r0
+seq r0 r0 -1
+beqz r0 18
+jal 60
+push 1
+jal 32
+pop r0
+sgt r0 r0 -1
+beqz r0 24
+jal 71
+push 2
+jal 32
+pop r0
+sgt r0 r0 -1
+beqz r0 30
+jal 76
+j 3
+j 9999
+pop r0
+push ra
+seq r0 r0 1
+select r0 r0 749835667 -1246182359
+lbns r1 -1841632400 r0 0 Seeding Maximum
+move r15 r1
+j 39
+pop ra
+push r15
+j ra
+push ra
+l r0 Sun SolarAngle
+slt r0 r0 115
+select r0 r0 1 0
+s Light On r0
+pop ra
+j ra
+push ra
+move r0 0
+yield
+lbns r1 958056199 -365683961 0 Occupied Maximum
+move r0 r1
+sne r0 r0 0
+beqz r0 58
+sbn 958056199 -365683961 Plant 1
+sleep 10
+pop ra
+j ra
+push ra
+move r0 0
+yield
+lbns r1 958056199 1933396669 0 Occupied Maximum
+move r0 r1
+sne r0 r0 0
+beqz r0 69
+sbn 958056199 1933396669 Plant 1
+sleep 10
+pop ra
+j ra
+push ra
+sbn 958056199 -365683961 Harvest 1
+sleep 10
+pop ra
+j ra
+push ra
+sbn 958056199 1933396669 Harvest 1
+sleep 10
+pop ra
+j ra
+pop r0
+push ra
+seq r0 r0 1
+select r0 r0 749835667 -1246182359
+lbns r1 -1841632400 r0 0 Mature Maximum
+move r15 r1
+j 88
+pop ra
+push r15
+j ra
+
+
+
+o2.ic11
+
+alias this db
+beqz 1 15
+lbn r0 435685051 -2000375175 Pressure Maximum
+slt r1 r0 18000
+beqz r1 7
+s this Mode 1
+j 8
+s this Mode 0
+sgt r0 r0 19500
+beqz r0 13
+sbn -1129453144 688953485 Mode 0
+sbn -1129453144 688953485 On 1
+j 14
+sbn -1129453144 688953485 On 0
+j 1
+j 9999
+
+
+
+printers_lights.ic11
+
+beqz 1 20
+yield
+lbn r0 321604921 -1973931577 Setting Maximum
+sb -1009150565 On r0
+sb -2020231820 On r0
+sb 336213101 On r0
+sb -1888248335 On r0
+sb 1307165496 On r0
+sb -465741100 On r0
+sb -641491515 On r0
+sb 1781051034 On r0
+lbn r1 321604921 -1887051411 Setting Maximum
+move r0 r1
+seq r0 r0 0
+beqz r0 17
+sb 555215790 On 0
+j 19
+lb r0 322782515 Activate Maximum
+sb 555215790 On r0
+j 0
+j 9999
+
+
+
+solar.ic11
+
+alias SunSensor d0
+move r0 0
+move r1 0
+move r2 0
+beqz 1 25
+yield
+l r3 SunSensor Horizontal
+move r0 r3
+l r3 SunSensor Vertical
+move r1 r3
+sub r3 90 r1
+move r1 r3
+add r3 r0 90
+move r0 r3
+sge r3 r0 180
+slt r4 r0 0
+or r3 r3 r4
+beqz r3 19
+move r0 0
+sub r3 r0 180
+move r2 r3
+sbn -1545574413 -1211016521 Horizontal r2
+sbn -1545574413 -724093330 Horizontal r0
+sb -1545574413 Vertical r1
+j 4
+j 9999
+
+
+
+storage.ic11
+
+alias this db
+move r0 sp
+add r15 r15 14
+push 1758427767
+push 1724793494
+push -707307845
+push -1348105509
+push 1103972403
+push -983091249
+push -190236170
+push 1830218956
+push -916518678
+push -1516581844
+push -1805394113
+push 1253102035
+push 1217489948
+push -1499471529
+move r1 sp
+add r15 r15 14
+push 1075892427
+push 1273908270
+push 1856813210
+push 2147036422
+push -1428457253
+push -1309019979
+push 281104796
+push -173877401
+push -59188428
+push -504468218
+push -1217277409
+push 952757279
+push 235176125
+push 1303026266
+beqz 1 66
+yield
+lbn r2 554524804 469907351 Setting Maximum
+seq r3 r2 0
+beqz r3 41
+sbn 801677497 1829321628 On 0
+sbn -815193061 1431286938 On 0
+j 65
+sbn 801677497 1829321628 On 1
+sub r3 r2 1
+add r0 r0 r3
+get r0 db r0
+s this Setting r0
+sbn -815193061 1431286938 On 1
+sub r0 r2 1
+add r0 r1 r0
+get r0 db r0
+lbn r3 1155865682 r0 Quantity Maximum
+mul r0 50 r3
+sbn -815193061 1431286938 Setting r0
+lbn r0 491845673 -1984937757 Setting Maximum
+seq r0 r0 1
+beqz r0 65
+sub r0 r2 1
+add r0 r1 r0
+get r0 db r0
+sbn 1155865682 r0 Open 1
+yield
+sub r0 r2 1
+add r0 r1 r0
+get r0 db r0
+sbn 1155865682 r0 Open 0
+j 33
+j 9999
+
+
+
+suit.ic11
+
+alias healmet d0
+alias jetpack d1
+alias suit db
+beqz 1 10
+l r0 healmet Open
+seqz r0 r0
+s suit On r0
+s suit Filtration r0
+s suit AirRelease r0
+j 3
+j 9999
+

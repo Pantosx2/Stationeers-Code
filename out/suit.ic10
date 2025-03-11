@@ -1,0 +1,11 @@
+alias healmet d0
+alias jetpack d1
+alias suit db
+beqz 1 10
+l r0 healmet Open
+seqz r0 r0
+s suit On r0
+s suit Filtration r0
+s suit AirRelease r0
+j 3
+j 9999

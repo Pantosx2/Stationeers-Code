@@ -1,0 +1,39 @@
+
+define PERCENTAGE 1
+define LED -815193061
+define BATDISP HASH("Battery Display")
+define ANALYZER 1036015121
+define ANALOUT HASH("Cable Analyzer Out")
+
+define BLUE 0
+define GREEN 2
+define ORANGE 3
+define RED 4
+define YELLOW 5
+
+define MAXPOWER 48600000
+
+alias temp r0
+
+sbn LED BATDISP Mode PERCENTAGE
+
+loop:
+yield
+lbn temp ANALYZER ANALOUT PowerRequired Maximum
+div temp temp MAXPOWER
+sub temp 1 temp
+sbn LED BATDISP Setting temp
+brlt temp 0.99 3
+sbn LED BATDISP Color BLUE
+j loop
+brlt temp 0.76 3
+sbn LED BATDISP Color GREEN
+j loop
+brlt temp 0.51 3
+sbn LED BATDISP Color YELLOW
+j loop
+brlt temp 0.26 3
+sbn LED BATDISP Color ORANGE
+j loop
+sbn LED BATDISP Color RED
+j loop

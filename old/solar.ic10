@@ -1,0 +1,49 @@
+#Hello fellow stationeer!
+
+#This is a simple script to
+#make solar panels trace the sun.
+#Device on screw no1 should be a daylight sensor
+#placed on the floor with the data port facing north
+#Solar panels should be placed so that when set to
+#horizontal=0 they face east.
+#(I think the data port must be facing north).
+
+#!!!!IMPORTANT!!!!
+#Change the number below to match the
+#Prefab Hash of the exact solar panel you are using
+#In this example we are using
+#Solar Panel Heavy Dual.
+#(This number can be found by in the F1 wiki)
+define prefabHash -1545574413
+define southName HASH("PanelS")
+define northName HASH("PanelN")
+
+#!Dont touch anything below this line
+#if you dont know what you are doing!
+
+#---------------------------------------------------
+
+alias hor r1
+alias ver r2
+alias hor2 r3
+
+loop:
+l hor d0 Horizontal
+l ver d0 Vertical
+sub ver 90 ver
+add hor hor 90
+bgeal hor 180 night
+bgeal 0 hor night
+
+sub hor2 hor 180
+
+sbn prefabHash southName Horizontal hor2
+
+sbn prefabHash northName Horizontal hor
+sb prefabHash Vertical ver
+
+j loop
+
+night:
+move hor 0
+j ra

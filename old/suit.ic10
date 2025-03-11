@@ -1,0 +1,15 @@
+
+alias suit db
+alias healmet d0
+alias jetpack d1
+
+alias healmetOpen r1
+alias temp r2
+
+loop:
+l healmetOpen healmet Open
+slez temp healmetOpen
+s suit On temp
+s suit Filtration temp
+s suit AirRelease temp
+j loop

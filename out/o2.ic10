@@ -1,0 +1,16 @@
+alias this db
+beqz 1 15
+lbn r0 435685051 -2000375175 Pressure Maximum
+slt r1 r0 18000
+beqz r1 7
+s this Mode 1
+j 8
+s this Mode 0
+sgt r0 r0 19500
+beqz r0 13
+sbn -1129453144 688953485 Mode 0
+sbn -1129453144 688953485 On 1
+j 14
+sbn -1129453144 688953485 On 0
+j 1
+j 9999

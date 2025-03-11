@@ -1,0 +1,44 @@
+const SWITCH = 321604921;
+const PRINTERSWITCH = "Printer Switch";
+
+const LIGHTSWITCH = "Light Switch";
+const OCCUP = 322782515;
+
+const LIGHT = 555215790;
+
+const SORTER = -1009150565;
+const STACKER = -2020231820;
+
+const AUTOLATHE = 336213101;
+const BENDER = -1888248335;
+const ELECTRONICS = 1307165496;
+const TOOLS = -465741100;
+const SECURITY = -641491515;
+const ROCKET = 1781051034;
+
+void Main()
+{
+    while (true)
+    {
+        yield;
+        var temp = DevicesOfType(SWITCH).WithName(PRINTERSWITCH).Setting.Maximum;
+        DevicesOfType(SORTER).On = temp;
+        DevicesOfType(STACKER).On = temp;
+        DevicesOfType(AUTOLATHE).On = temp;
+        DevicesOfType(BENDER).On = temp;
+        DevicesOfType(ELECTRONICS).On = temp;
+        DevicesOfType(TOOLS).On = temp;
+        DevicesOfType(SECURITY).On = temp;
+        DevicesOfType(ROCKET).On = temp;
+
+        temp = DevicesOfType(SWITCH).WithName(LIGHTSWITCH).Setting.Maximum;
+        if(temp ==0)
+        {
+            DevicesOfType(LIGHT).On = 0;
+        }
+        else
+        {
+            DevicesOfType(LIGHT).On = DevicesOfType(OCCUP).Activate.Maximum;
+        }
+    }
+}

@@ -1,0 +1,57 @@
+pin SunSensor d0;
+pin ClockDisplay d1;
+
+void Main()
+{
+    var maxSunAngle = 90;
+    var minSunAngle = 90;
+
+    var ver = 0;
+    var verOld = 0;
+    var minutes = 0;
+    var time = 0;
+
+    var dayDeg = 0;
+    var minutesPerDeg = 0;
+
+    while(true)
+    {
+        yield;
+        dayDeg = maxSunAngle - minSunAngle;
+        minutesPerDeg = 720 / dayDeg;
+
+        ver = SunSensor.Vertical;
+        // Calibrate minSunAngle
+        if (ver < minSunAngle)
+        {
+            minSunAngle = ver;
+        }
+        // Calibrate maxSunAngle
+        if (ver > maxSunAngle)
+        {
+            maxSunAngle = ver;
+        }
+
+        ver = ver - minSunAngle;
+        if (ver > verOld)
+        {
+            // Day
+            minutes =  ver + dayDeg;
+        }
+        else
+        {
+            // Night
+            minutes = dayDeg - ver;
+        }
+
+        // Display
+        minutes = minutes * minutesPerDeg;
+        time = floor(minutes / 60);
+        minutes = floor(minutes % 60) / 100;
+        time = time + minutes;
+
+        ClockDisplay.Setting = time;
+        verOld = ver;
+        sleep(1);
+    }
+}

@@ -1,0 +1,99 @@
+
+pin Light d0;
+pin Sun d1;
+
+const HARVIE = 958056199;
+const Harvie1 = "Harvie1";
+const Harvie2 = "Harvie2";
+
+const TRAY = -1841632400;
+const Tray1 = "Tray1";
+const Tray2 = "Tray2";
+
+const TimeThres = 115;
+
+void light()
+{
+    var lght = Sun.SolarAngle < TimeThres ? 1 : 0;
+    Light.On = lght;
+}
+
+void plant1()
+{
+    var temp = 0;
+    yield;
+    temp = DevicesOfType(HARVIE).WithName(Harvie1).Slots[0].Occupied.Maximum;
+    if(temp != 0)
+    {
+        DevicesOfType(HARVIE).WithName(Harvie1).Plant = 1;
+        sleep(10);
+    }
+}
+
+void plant2()
+{
+    var temp = 0;
+    yield;
+    temp = DevicesOfType(HARVIE).WithName(Harvie2).Slots[0].Occupied.Maximum;
+    if(temp != 0)
+    {
+        DevicesOfType(HARVIE).WithName(Harvie2).Plant = 1;
+        sleep(10);
+    }
+}
+
+void harvest1()
+{
+    DevicesOfType(HARVIE).WithName(Harvie1).Harvest = 1;
+    sleep(10);
+}
+
+void harvest2()
+{
+    DevicesOfType(HARVIE).WithName(Harvie2).Harvest = 1;
+    sleep(10);
+}
+
+real getMature(idx)
+{
+    var name = idx == 1 ? Tray1 : Tray2;
+    return DevicesOfType(TRAY).WithName(name).Slots[0].Mature.Maximum;
+}
+
+real getSeeding(idx)
+{
+    var name = idx == 1 ? Tray1 : Tray2;
+    return DevicesOfType(TRAY).WithName(name).Slots[0].Seeding.Maximum;
+}
+
+void Main()
+{
+    var temp=0;
+
+    while(true)
+    {
+        yield;
+        light();
+
+        
+        if(getMature(1) == -1)
+        {
+            plant1();
+        }
+
+        if(getMature(2) == -1)
+        {
+            plant2();
+        }
+
+        if(getSeeding(1) > -1)
+        {
+            harvest1();
+        }
+
+        if(getSeeding(2) > -1)
+        {
+            harvest2();
+        }
+    }
+}

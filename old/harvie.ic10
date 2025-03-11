@@ -1,0 +1,70 @@
+
+alias Light d0
+alias Sun d1
+
+define HARVIE 958056199
+define Harvie1 HASH("Harvie1")
+
+define Harvie2 HASH("Harvie2")
+
+define TRAY -1841632400
+define Tray1 HASH("Tray1")
+define Tray2 HASH("Tray2")
+
+define T 115
+
+alias temp r0
+alias lght r1
+
+loop:
+yield
+jal light
+
+lbns temp TRAY Tray1 0 Mature Maximum
+beqal temp -1 plant1
+
+lbns temp TRAY Tray2 0 Mature Maximum
+beqal temp -1 plant2
+
+lbns temp TRAY Tray1 0 Seeding Maximum
+bgtal temp -1 harvest1
+
+lbns temp TRAY Tray2 0 Seeding Maximum
+bgtal temp -1 harvest2
+
+j loop
+
+plant1:
+yield
+lbns temp HARVIE Harvie1 0 Occupied Maximum
+breqz temp 3
+sbn HARVIE Harvie1 Plant 1
+sleep 10
+j ra
+
+plant2:
+yield
+lbns temp HARVIE Harvie2 0 Occupied Maximum
+breqz temp 3
+sbn HARVIE Harvie2 Plant 1
+sleep 10
+j ra
+
+harvest1:
+yield
+sbn HARVIE Harvie1 Harvest 1
+sleep 10
+j ra
+
+harvest2:
+yield
+sbn HARVIE Harvie2 Harvest 1
+sleep 10
+j ra
+
+light:
+yield
+l temp Sun SolarAngle
+slt lght temp T
+s Light On lght
+j ra

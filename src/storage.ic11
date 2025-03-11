@@ -1,0 +1,75 @@
+pin this db;
+
+const SILO = 1155865682;
+const DIAL = 554524804;
+const OREDIAL = "Ore Dial";
+const CONSOLE = 801677497;
+const OREDISPLAY = "Ore Display";
+const LED = -815193061;
+const ORECOUNT = "Ore Count";
+const BUTTON = 491845673;
+const OREBUTTON = "Ore Button";
+
+const Iron = 1758427767;
+const Coal = 1724793494;
+const Copper = -707307845;
+const Gold = -1348105509;
+const Silicon = 1103972403;
+const Cobalt = -983091249;
+const Lead = -190236170;
+const Nickel = 1830218956;
+const Silver = -916518678;
+const Uranium = -1516581844;
+const Oxite = -1805394113;
+const Volatiles = 1253102035;
+const Water = 1217489948;
+const Nitrice = -1499471529;
+
+const SDBSiloIron = "SDB Silo Iron";
+const SDBSiloCoal = "SDB Silo Coal";
+const SDBSiloCopper = "SDB Silo Copper";
+const SDBSiloGold = "SDB Silo Gold";
+const SDBSiloSilicon = "SDB Silo Silicon";
+const SDBSiloCobalt = "SDB Silo Cobalt";
+const SDBSiloLead = "SDB Silo Lead";
+const SDBSiloNickel = "SDB Silo Nickel";
+const SDBSiloSilver = "SDB Silo Silver";
+const SDBSiloUranium = "SDB Silo Uranium";
+const SDBSiloOxite = "SDB Silo Oxite";
+const SDBSiloVolatiles = "SDB Silo Volatiles";
+const SDBSiloWater = "SDB Silo Water";
+const SDBSiloNitrice = "SDB Silo Nitrice";
+
+void Main()
+{
+    var ores={ Iron, Coal, Copper, Gold, Silicon, Cobalt, Lead, Nickel, Silver, Uranium, Oxite, Volatiles, Water, Nitrice };
+    var silos={ SDBSiloIron, SDBSiloCoal, SDBSiloCopper, SDBSiloGold, SDBSiloSilicon, SDBSiloCobalt, SDBSiloLead, SDBSiloNickel, SDBSiloSilver, SDBSiloUranium, SDBSiloOxite, SDBSiloVolatiles, SDBSiloWater, SDBSiloNitrice }; 
+
+    while(true)
+    {
+        yield;
+        var idx = DevicesOfType(DIAL).WithName(OREDIAL).Setting.Maximum;
+        if(idx == 0) 
+        {
+            DevicesOfType(CONSOLE).WithName(OREDISPLAY).On = 0;
+            DevicesOfType(LED).WithName(ORECOUNT).On = 0;
+        }
+        else
+        {
+            DevicesOfType(CONSOLE).WithName(OREDISPLAY).On = 1;
+            this.Setting = ores[idx - 1];
+
+            DevicesOfType(LED).WithName(ORECOUNT).On = 1;
+            DevicesOfType(LED).WithName(ORECOUNT).Setting = 50 * DevicesOfType(SILO).WithName(silos[idx - 1]).Quantity.Maximum;
+
+            if(DevicesOfType(BUTTON).WithName(OREBUTTON).Setting.Maximum == 1)
+            {
+                DevicesOfType(SILO).WithName(silos[idx - 1]).Open = 1;
+                yield;
+                DevicesOfType(SILO).WithName(silos[idx - 1]).Open = 0;
+            }
+        }
+
+    }
+
+}

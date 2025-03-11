@@ -1,0 +1,106 @@
+alias centrifuge d0
+alias lever d1
+jal 19
+jal 94
+jal 26
+jal 46
+beqz 1 18
+jal 19
+l r0 lever Setting
+sne r0 r0 0
+l r1 centrifuge Reagents
+sgt r1 r1 500
+or r0 r0 r1
+beqz r0 17
+jal 94
+jal 26
+jal 46
+j 6
+j 9999
+push ra
+yield
+l r0 lever Setting
+seqz r0 r0
+sb 265720906 On r0
+pop ra
+j ra
+push ra
+s centrifuge Open 1
+s centrifuge CombustionLimiter 0
+s centrifuge Throttle 0
+l r0 centrifuge Reagents
+sgt r0 r0 0
+l r1 centrifuge Stress
+sgt r1 r1 0
+or r0 r0 r1
+l r1 lever Setting
+sne r1 r1 0
+or r0 r0 r1
+l r1 centrifuge Rpm
+sgt r1 r1 0
+or r0 r0 r1
+beqz r0 44
+jal 19
+j 30
+pop ra
+j ra
+push ra
+s centrifuge Open 0
+s centrifuge On 1
+s centrifuge Throttle 10
+s centrifuge CombustionLimiter 10
+l r0 centrifuge Rpm
+slt r0 r0 250
+beqz r0 56
+jal 19
+j 51
+s centrifuge Throttle 20
+s centrifuge CombustionLimiter 20
+l r0 centrifuge Rpm
+slt r0 r0 280
+beqz r0 63
+jal 19
+j 58
+s centrifuge Throttle 40
+s centrifuge CombustionLimiter 40
+l r0 centrifuge Rpm
+slt r0 r0 340
+beqz r0 70
+jal 19
+j 65
+s centrifuge Throttle 60
+s centrifuge CombustionLimiter 60
+l r0 centrifuge Rpm
+slt r0 r0 425
+beqz r0 77
+jal 19
+j 72
+s centrifuge Throttle 80
+s centrifuge CombustionLimiter 80
+l r0 centrifuge Rpm
+slt r0 r0 470
+beqz r0 85
+yield
+jal 19
+j 79
+s centrifuge Throttle 100
+s centrifuge CombustionLimiter 100
+l r0 centrifuge Rpm
+slt r0 r0 470
+beqz r0 92
+jal 19
+j 87
+pop ra
+j ra
+push ra
+s centrifuge Throttle 0
+s centrifuge CombustionLimiter 0
+s centrifuge On 0
+l r0 centrifuge Rpm
+sgt r0 r0 0
+beqz r0 103
+jal 19
+j 98
+s centrifuge Open 1
+pop ra
+j ra

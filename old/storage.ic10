@@ -1,0 +1,123 @@
+alias temp r0
+alias num r1
+alias oldNum r2
+alias btn r3
+alias spbu r4
+alias arg r14
+alias ret r15
+
+define SILO 1155865682
+define DIAL 554524804
+define OREDIAL HASH("Ore Dial")
+define CONSOLE 801677497
+define OREDISPLAY HASH("Ore Display")
+define LED -815193061
+define ORECOUNT HASH("Ore Count")
+define BUTTON 491845673
+define OREBUTTON HASH("Ore Button")
+
+define LEVER 1220484876
+define CENTLEVER HASH("Centrifuge Lever")
+define DRILL 265720906
+
+init:
+move sp 0
+push 1758427767 #Iron
+push 1724793494 #Coal
+push -707307845 #Copper
+push -1348105509 #Gold
+push 1103972403 #Silicon
+push -983091249 #Cobalt
+push -190236170 #Lead
+push 1830218956 #Nickel
+push -916518678 #Silver
+push -1516581844 #Uranium
+push -1805394113 #Oxite
+push 1253102035 #Volatiles
+push 1217489948 #Water
+push -1499471529 #Nitrice
+push HASH("SDB Silo Iron")
+push HASH("SDB Silo Coal")
+push HASH("SDB Silo Copper")
+push HASH("SDB Silo Gold")
+push HASH("SDB Silo Silicon")
+push HASH("SDB Silo Cobalt")
+push HASH("SDB Silo Lead")
+push HASH("SDB Silo Nickel")
+push HASH("SDB Silo Silver")
+push HASH("SDB Silo Uranium")
+push HASH("SDB Silo Oxite")
+push HASH("SDB Silo Volatiles")
+push HASH("SDB Silo Water")
+push HASH("SDB Silo Nitrice")
+move oldNum 69
+move num 42
+j main
+
+main:
+yield
+
+jal getnum
+beqz num off
+breq num oldNum 2
+jal display
+jal getBtn
+bnezal btn dispence
+j main
+
+off:
+sbn CONSOLE OREDISPLAY On 0
+sbn LED ORECOUNT On 0
+j main
+
+getnum:
+lbn num DIAL OREDIAL Setting Maximum
+j ra
+
+getBtn:
+lbn btn BUTTON OREBUTTON Setting Maximum
+j ra
+
+display:
+push ra
+move arg num
+jal getHash
+sbn CONSOLE OREDISPLAY On 1
+sbn LED ORECOUNT On 1
+jal getSilo
+lbn temp SILO ret Quantity Maximum
+mul temp temp 50
+sbn LED ORECOUNT Setting temp
+pop ra
+j ra
+
+define hashBase 0
+getHash:
+move spbu sp
+add temp hashBase arg
+move sp temp
+peek ret
+s db Setting ret
+move sp spbu
+j ra
+
+define siloBase 14
+getSilo:
+move spbu sp
+add temp siloBase arg
+move sp temp
+peek ret
+move sp spbu
+j ra
+
+dispence:
+push ra
+move arg num
+jal getSilo
+sbn SILO ret Open 1
+yield
+sbn SILO ret Open 0
+move oldNum 42
+move btn 0
+pop ra
+j ra

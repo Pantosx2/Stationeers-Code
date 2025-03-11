@@ -1,0 +1,67 @@
+alias this db
+move r0 sp
+add r15 r15 14
+push 1758427767
+push 1724793494
+push -707307845
+push -1348105509
+push 1103972403
+push -983091249
+push -190236170
+push 1830218956
+push -916518678
+push -1516581844
+push -1805394113
+push 1253102035
+push 1217489948
+push -1499471529
+move r1 sp
+add r15 r15 14
+push 1075892427
+push 1273908270
+push 1856813210
+push 2147036422
+push -1428457253
+push -1309019979
+push 281104796
+push -173877401
+push -59188428
+push -504468218
+push -1217277409
+push 952757279
+push 235176125
+push 1303026266
+beqz 1 66
+yield
+lbn r2 554524804 469907351 Setting Maximum
+seq r3 r2 0
+beqz r3 41
+sbn 801677497 1829321628 On 0
+sbn -815193061 1431286938 On 0
+j 65
+sbn 801677497 1829321628 On 1
+sub r3 r2 1
+add r0 r0 r3
+get r0 db r0
+s this Setting r0
+sbn -815193061 1431286938 On 1
+sub r0 r2 1
+add r0 r1 r0
+get r0 db r0
+lbn r3 1155865682 r0 Quantity Maximum
+mul r0 50 r3
+sbn -815193061 1431286938 Setting r0
+lbn r0 491845673 -1984937757 Setting Maximum
+seq r0 r0 1
+beqz r0 65
+sub r0 r2 1
+add r0 r1 r0
+get r0 db r0
+sbn 1155865682 r0 Open 1
+yield
+sub r0 r2 1
+add r0 r1 r0
+get r0 db r0
+sbn 1155865682 r0 Open 0
+j 33
+j 9999
