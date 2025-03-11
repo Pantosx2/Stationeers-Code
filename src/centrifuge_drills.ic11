@@ -11,12 +11,13 @@ void drills()
 
 void setup()
 {
+    DevicesOfType(DRILL).On = 0;
     centrifuge.Open = 1;
     centrifuge.CombustionLimiter = 0;
     centrifuge.Throttle = 0;
     while(centrifuge.Reagents > 0 | centrifuge.Stress > 0 | lever.Setting != 0 | centrifuge.Rpm > 0)
     {
-        drills();
+       yield;
     }
 }
 
@@ -52,7 +53,6 @@ void startup()
     centrifuge.CombustionLimiter = 80;
     while(centrifuge.Rpm < 470)
     {
-        yield;
         drills();
     }
     centrifuge.Throttle = 100;
@@ -65,12 +65,13 @@ void startup()
 
 void shutdown()
 {
+    DevicesOfType(DRILL).On = 0;
     centrifuge.Throttle = 0;
     centrifuge.CombustionLimiter = 0;
     centrifuge.On = 0;
     while(centrifuge.Rpm > 0)
     {
-        drills();
+        yield;
     }
     centrifuge.Open = 1;
 }

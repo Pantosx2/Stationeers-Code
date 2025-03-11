@@ -102,7 +102,7 @@ alias lever d1
 jal 19
 jal 94
 jal 26
-jal 46
+jal 47
 beqz 1 18
 jal 19
 l r0 lever Setting
@@ -113,7 +113,7 @@ or r0 r0 r1
 beqz r0 17
 jal 94
 jal 26
-jal 46
+jal 47
 j 6
 j 9999
 push ra
@@ -124,6 +124,7 @@ sb 265720906 On r0
 pop ra
 j ra
 push ra
+sb 265720906 On 0
 s centrifuge Open 1
 s centrifuge CombustionLimiter 0
 s centrifuge Throttle 0
@@ -138,9 +139,9 @@ or r0 r0 r1
 l r1 centrifuge Rpm
 sgt r1 r1 0
 or r0 r0 r1
-beqz r0 44
-jal 19
-j 30
+beqz r0 45
+yield
+j 31
 pop ra
 j ra
 push ra
@@ -150,38 +151,37 @@ s centrifuge Throttle 10
 s centrifuge CombustionLimiter 10
 l r0 centrifuge Rpm
 slt r0 r0 250
-beqz r0 56
+beqz r0 57
 jal 19
-j 51
+j 52
 s centrifuge Throttle 20
 s centrifuge CombustionLimiter 20
 l r0 centrifuge Rpm
 slt r0 r0 280
-beqz r0 63
+beqz r0 64
 jal 19
-j 58
+j 59
 s centrifuge Throttle 40
 s centrifuge CombustionLimiter 40
 l r0 centrifuge Rpm
 slt r0 r0 340
-beqz r0 70
+beqz r0 71
 jal 19
-j 65
+j 66
 s centrifuge Throttle 60
 s centrifuge CombustionLimiter 60
 l r0 centrifuge Rpm
 slt r0 r0 425
-beqz r0 77
+beqz r0 78
 jal 19
-j 72
+j 73
 s centrifuge Throttle 80
 s centrifuge CombustionLimiter 80
 l r0 centrifuge Rpm
 slt r0 r0 470
 beqz r0 85
-yield
 jal 19
-j 79
+j 80
 s centrifuge Throttle 100
 s centrifuge CombustionLimiter 100
 l r0 centrifuge Rpm
@@ -192,14 +192,15 @@ j 87
 pop ra
 j ra
 push ra
+sb 265720906 On 0
 s centrifuge Throttle 0
 s centrifuge CombustionLimiter 0
 s centrifuge On 0
 l r0 centrifuge Rpm
 sgt r0 r0 0
-beqz r0 103
-jal 19
-j 98
+beqz r0 104
+yield
+j 99
 s centrifuge Open 1
 pop ra
 j ra
@@ -486,39 +487,43 @@ push -1217277409
 push 952757279
 push 235176125
 push 1303026266
-beqz 1 66
+move r2 0
+beqz 1 70
 yield
-lbn r2 554524804 469907351 Setting Maximum
+lbn r3 554524804 469907351 Setting Maximum
+move r2 r3
 seq r3 r2 0
-beqz r3 41
+beqz r3 43
 sbn 801677497 1829321628 On 0
 sbn -815193061 1431286938 On 0
-j 65
+j 55
 sbn 801677497 1829321628 On 1
 sub r3 r2 1
-add r0 r0 r3
-get r0 db r0
-s this Setting r0
+add r3 r0 r3
+get r3 db r3
+s this Setting r3
 sbn -815193061 1431286938 On 1
-sub r0 r2 1
-add r0 r1 r0
-get r0 db r0
-lbn r3 1155865682 r0 Quantity Maximum
-mul r0 50 r3
-sbn -815193061 1431286938 Setting r0
-lbn r0 491845673 -1984937757 Setting Maximum
-seq r0 r0 1
-beqz r0 65
-sub r0 r2 1
-add r0 r1 r0
-get r0 db r0
-sbn 1155865682 r0 Open 1
+sub r3 r2 1
+add r3 r1 r3
+get r3 db r3
+lbn r4 1155865682 r3 Quantity Maximum
+mul r3 50 r4
+sbn -815193061 1431286938 Setting r3
+sne r3 r2 0
+lbn r4 491845673 -1984937757 Setting Maximum
+seq r4 r4 1
+and r3 r3 r4
+beqz r3 69
+sub r3 r2 1
+add r3 r1 r3
+get r3 db r3
+sbn 1155865682 r3 Open 1
 yield
-sub r0 r2 1
-add r0 r1 r0
-get r0 db r0
-sbn 1155865682 r0 Open 0
-j 33
+sub r3 r2 1
+add r3 r1 r3
+get r3 db r3
+sbn 1155865682 r3 Open 0
+j 34
 j 9999
 
 
