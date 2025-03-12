@@ -5,7 +5,7 @@ ac.ic11
 
 alias sensor d0
 alias analyzer d1
-beqz 1 60
+beqz 1 63
 yield
 l r0 sensor Pressure
 l r1 sensor Temperature
@@ -13,54 +13,57 @@ l r2 sensor RatioOxygen
 l r3 sensor RatioCarbonDioxide
 l r4 sensor RatioPollutant
 l r5 sensor RatioNitrousOxide
+move r6 0
 slt r2 r2 0.2
-slt r6 r0 90
-or r2 r2 r6
-beqz r2 17
+slt r7 r0 90
+or r2 r2 r7
+beqz r2 18
 sbn -1129453144 -2009316918 Mode 0
 sbn -1129453144 -2009316918 On 1
-j 23
+j 24
 sgt r0 r0 110
-beqz r0 22
+beqz r0 23
 sbn -321403609 -2009316918 Mode 1
 sbn -321403609 -2009316918 On 1
-j 23
+j 24
 sbn -321403609 -2009316918 On 0
 slt r0 r3 0.20
-beqz r0 27
+beqz r0 28
 sbn -348054045 -1074943586 On 1
-j 28
+j 29
 sbn -348054045 -1074943586 On 0
 sgt r0 r4 0.00001
 sgt r2 r5 0.00001
 or r0 r0 r2
-beqz r0 34
+beqz r0 35
 sbn -348054045 372304012 On 1
-j 35
+j 36
 sbn -348054045 372304012 On 0
 sgt r0 r1 299.15
-beqz r0 39
+beqz r0 41
+move r6 0
 sbn -1280984102 -1985635137 On 1
-j 42
+j 45
 slt r0 r1 298.15
-beqz r0 42
+beqz r0 45
+move r6 1
 sbn -1280984102 -1985635137 On 0
 slt r0 r1 297.15
-beqz r0 46
+beqz r0 50
+move r6 0
 sbn -1280984102 1726240876 On 1
-j 49
+j 54
 sgt r0 r1 298.15
-beqz r0 49
+beqz r0 54
+move r6 1
 sbn -1280984102 1726240876 On 0
-sgt r0 r1 297.15
-slt r1 r1 299.15
-and r0 r0 r1
-beqz r0 59
+seq r0 r6 1
+beqz r0 62
 l r0 analyzer Pressure
 sgt r0 r0 0
-beqz r0 58
+beqz r0 61
 sbn -321403609 997285068 On 1
-j 59
+j 62
 sbn -321403609 997285068 On 0
 j 2
 j 9999
