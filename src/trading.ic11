@@ -118,7 +118,7 @@ void Main()
             // Move the dish in the direction of the signal
             while(DevicesOfType(dish).WattsReachingContact.Maximum <= DevicesOfType(dish).MinimumWattsToContact.Maximum & !exit)
             {
-                if(DevicesOfType(dish).MinimumWattsToContact.Maximum > maxWatts)
+                if(DevicesOfType(dish).MinimumWattsToContact.Maximum > maxWatts | DevicesOfType(switch).WithName(tradeSwitch).Setting.Maximum == 0)
                 {
                     exit = 1;
                 }
