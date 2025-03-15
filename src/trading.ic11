@@ -1,0 +1,196 @@
+
+const led = -815193061;
+const tradeLed = "Trade Led";
+
+const dish = 439026183;
+
+const computer = -626563514;
+const tradeComputer = "Trade Computer";
+
+const base = -2066405918;
+
+const vending = -443130773;
+const tradeVending = "Trade Vend";
+
+const switch = 321604921;
+const tradeSwitch = "Trade Switch";
+
+const maxWait = 30;
+
+const maxWatts = 7000;
+
+// void control()
+// {
+    // var on = DevicesOfType(switch).WithName(tradeSwitch).Setting.Maximum;
+    // DevicesOfType(dish).On = on;
+    // DevicesOfType(computer).WithName(tradeComputer).On = on;
+    // DevicesOfType(base).On = on;
+    // DevicesOfType(vending).WithName(tradeVending).On = on;
+    // DevicesOfType(led).WithName(tradeLed).On = on;
+// }
+
+// void addHorizontal(h)
+// {
+//     DevicesOfType(dish).Horizontal = DevicesOfType(dish).Horizontal.Maximum + h;
+//     while(DevicesOfType(dish).Idle.Maximum == 0)
+//     {
+//         yield;
+//     }
+// }
+
+// void addVertical(v)
+// {
+//     DevicesOfType(dish).Vertical = DevicesOfType(dish).Vertical.Maximum + v;
+//     while(DevicesOfType(dish).Idle.Maximum == 0)
+//     {
+//         yield;
+//     }
+// }
+
+// real getSignalStrength()
+// {
+//     var waitTime = 0;
+
+//     while(DevicesOfType(dish).SignalStrength.Maximum == -1 & waitTime < 120)
+//     {
+//         waitTime = waitTime + 1;
+//         sleep(1);
+//     }
+
+//     return DevicesOfType(dish).SignalStrength.Maximum;
+// }
+
+
+void Main()
+{
+    // var done = {0, 0, 0};
+    // var i = 0;
+
+    var exit = 0;
+
+    var change = 10;
+
+    var waitTime = 0;
+
+    var current = 0;
+    var strength = 0;
+    var strengthOld = 0;
+
+    DevicesOfType(led).WithName(tradeLed).Setting = 0;
+    while(true)
+    {
+        yield;
+        // control(); //Inlined below
+        var on = DevicesOfType(switch).WithName(tradeSwitch).Setting.Maximum;
+        DevicesOfType(dish).On = on;
+        DevicesOfType(computer).WithName(tradeComputer).On = on;
+        DevicesOfType(base).On = on;
+        DevicesOfType(vending).WithName(tradeVending).On = on;
+        DevicesOfType(led).WithName(tradeLed).On = on;
+        if(!on)
+        {
+            continue;
+        }
+
+        // Get the strongest signal
+        current = DevicesOfType(dish).SignalID.Maximum;
+
+        // If the current signal is not one of the three signals that have already been traded
+        // if(current != done[0] & current != done[1] & current != done[2])
+        if(DevicesOfType(dish).InterrogationProgress.Maximum != 1)
+        {
+            change = 20;
+            DevicesOfType(led).WithName(tradeLed).Setting = 0;
+
+            // strength = getSignalStrength(); //Inlined below
+            waitTime = 0;
+
+            while(DevicesOfType(dish).SignalStrength.Maximum == -1 & waitTime < 30)
+            {
+                waitTime = waitTime + 1;
+                sleep(1);
+            }
+
+            strength=DevicesOfType(dish).SignalStrength.Maximum;
+            
+            exit = 0;
+            // If the signal is not strong enough to trade
+            // Move the dish in the direction of the signal
+            while(DevicesOfType(dish).WattsReachingContact.Maximum <= DevicesOfType(dish).MinimumWattsToContact.Maximum & !exit)
+            {
+                if(DevicesOfType(dish).MinimumWattsToContact.Maximum > maxWatts)
+                {
+                    exit = 1;
+                }
+
+                DevicesOfType(led).WithName(tradeLed).Setting = 2;
+                
+                // addHorizontal(change); //Inlined below
+                DevicesOfType(dish).Horizontal = DevicesOfType(dish).Horizontal.Maximum + change;
+                while(DevicesOfType(dish).Idle.Maximum == 0)
+                {
+                    yield;
+                }
+
+
+                strengthOld = strength;
+                // strength = getSignalStrength(); //Inlined below
+                waitTime = 0;
+
+                while(DevicesOfType(dish).SignalStrength.Maximum == -1 & waitTime < maxWait)
+                {
+                    waitTime = waitTime + 1;
+                    sleep(1);
+                }
+
+                strength=DevicesOfType(dish).SignalStrength.Maximum;
+    
+                if(strength == -1)
+                {
+                    // addHorizontal(30); //Inlined below
+
+                    DevicesOfType(dish).Horizontal = DevicesOfType(dish).Horizontal.Maximum + maxWait;
+                    while(DevicesOfType(dish).Idle.Maximum == 0)
+                    {
+                        yield;
+                    }
+
+                    exit = 1;
+                }
+
+                if(strength > strengthOld)
+                {
+                    change = -1 * (change / 2);
+                }
+
+            }
+            // Signal is strong enough to trade
+            if(exit == 0)
+            {
+                DevicesOfType(led).WithName(tradeLed).Setting = 1;
+                // DevicesOfType(dish).BestContactFilter = DevicesOfType(dish).SignalID.Maximum;
+                DevicesOfType(dish).Activate = 0;
+                while(DevicesOfType(dish).InterrogationProgress.Maximum != 1)
+                {
+                    DevicesOfType(dish).Activate = 1;
+                }
+                DevicesOfType(dish).Activate = 0;
+                // DevicesOfType(dish).BestContactFilter = -1;
+                // done[i] = current;
+                // i = (i + 1) % 3;
+            }
+        }
+        else 
+        {
+            change = 90;
+            DevicesOfType(led).WithName(tradeLed).Setting = -1;
+
+            // addHorizontal(change); //Inlined below
+            DevicesOfType(dish).Horizontal = DevicesOfType(dish).Horizontal.Maximum + change;
+            while(DevicesOfType(dish).Idle.Maximum == 0)
+            {
+                yield;
+            }
+        }
+    }
+}

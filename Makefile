@@ -6,6 +6,8 @@ SRC= ./src/
 OUT= ./out/
 LOG= ./log.txt
 
+.PHONY: move all
+
 default: move
 
 move: all
