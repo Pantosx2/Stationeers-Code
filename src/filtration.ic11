@@ -1,0 +1,10 @@
+pin this db;
+
+void Main()
+{
+    while(true)
+    {
+        yield;
+        this.Mode = this.PressureInput > 0;
+    }
+}

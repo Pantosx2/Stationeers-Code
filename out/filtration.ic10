@@ -1,0 +1,8 @@
+alias this db
+beqz 1 7
+yield
+l r0 this PressureInput
+sgt r0 r0 0
+s this Mode r0
+j 1
+j 9999
