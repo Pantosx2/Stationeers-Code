@@ -13,8 +13,8 @@ const pol = "Filtration POL";
 const acV = "AC Vent";
 const acV2 = "AC Vent2";
 
-const pressureMax = 110;
-const pressureMin = 90;
+const pressureMax = 105;
+const pressureMin = 95;
 const tempMax = 273.15 + 26;
 const tempMid = 273.15 + 25;
 const tempMin = 273.15 + 24;
@@ -46,18 +46,17 @@ void Main()
             DevicesOfType(vent).WithName(acV2).Mode = OUT;
             DevicesOfType(vent).WithName(acV2).On = 1;
         }
-        else
+
+        // Pump air out if presssure is >110kPa
+        if(pres > pressureMax)
         {
-            // Pump air out if presssure is >110kPa
-            if(pres > pressureMax)
-            {
-                DevicesOfType(pump).WithName(acV2).Mode = IN;
-                DevicesOfType(pump).WithName(acV2).On = 1;
-            }
-            else 
-            {
-                DevicesOfType(pump).WithName(acV2).On = 0;
-            }
+            DevicesOfType(pump).WithName(acV2).Mode = IN;
+            DevicesOfType(pump).WithName(acV2).On = 1;
+        }
+
+        if(pres < 101 & pres > 99 & ratioO2 > 0.2)
+        {
+            DevicesOfType(pump).WithName(acV2).On = 0;
         }
 
         // Pump CO2 in if ratio is <20%
