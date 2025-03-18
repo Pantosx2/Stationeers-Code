@@ -508,42 +508,64 @@ push 952757279
 push 235176125
 push 1303026266
 move r2 0
-beqz 1 70
+move r3 0
+move r4 0
+sbn -815193061 -1990467500 Color 4
+beqz 1 92
 yield
-lbn r3 554524804 469907351 Setting Maximum
-move r2 r3
-seq r3 r2 0
-beqz r3 43
+lbn r5 554524804 469907351 Setting Maximum
+move r2 r5
+lbn r5 554524804 -564447559 Setting Maximum
+move r4 r5
+sgt r5 r4 r3
+beqz r5 47
+move r4 r3
+sbn 554524804 -564447559 Setting r4
+seq r5 r2 0
+beqz r5 54
 sbn 801677497 1829321628 On 0
 sbn -815193061 1431286938 On 0
-j 55
+sbn -815193061 -1990467500 On 0
+sbn 554524804 -564447559 Setting 0
+j 71
 sbn 801677497 1829321628 On 1
-sub r3 r2 1
-add r3 r0 r3
-get r3 db r3
-s this Setting r3
+sub r5 r2 1
+add r5 r0 r5
+get r5 db r5
+s this Setting r5
 sbn -815193061 1431286938 On 1
-sub r3 r2 1
-add r3 r1 r3
-get r3 db r3
-lbn r4 1155865682 r3 Quantity Maximum
-mul r3 50 r4
-sbn -815193061 1431286938 Setting r3
-sne r3 r2 0
-lbn r4 491845673 -1984937757 Setting Maximum
-seq r4 r4 1
-and r3 r3 r4
-beqz r3 69
-sub r3 r2 1
-add r3 r1 r3
-get r3 db r3
-sbn 1155865682 r3 Open 1
+sub r5 r2 1
+add r5 r1 r5
+get r5 db r5
+lbn r6 1155865682 r5 Quantity Maximum
+move r3 r6
+mul r5 50 r3
+sbn -815193061 1431286938 Setting r5
+sbn 554524804 -564447559 Mode r3
+sbn -815193061 -1990467500 On 1
+mul r5 50 r4
+sbn -815193061 -1990467500 Setting r5
+sne r5 r2 0
+lbn r6 491845673 -1984937757 Setting Maximum
+seq r6 r6 1
+and r5 r5 r6
+beqz r5 91
+sub r5 r2 1
+add r5 r1 r5
+get r5 db r5
+sbn 1155865682 r5 Open 1
+move r5 0
+slt r6 r5 r4
+beqz r6 87
 yield
-sub r3 r2 1
-add r3 r1 r3
-get r3 db r3
-sbn 1155865682 r3 Open 0
-j 34
+add r6 r5 1
+move r5 r6
+j 81
+sub r5 r2 1
+add r5 r1 r5
+get r5 db r5
+sbn 1155865682 r5 Open 0
+j 37
 j 9999
 
 
