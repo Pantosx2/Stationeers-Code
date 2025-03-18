@@ -511,7 +511,7 @@ move r2 0
 move r3 0
 move r4 0
 sbn -815193061 -1990467500 Color 4
-beqz 1 92
+beqz 1 93
 yield
 lbn r5 554524804 469907351 Setting Maximum
 move r2 r5
@@ -549,22 +549,23 @@ sne r5 r2 0
 lbn r6 491845673 -1984937757 Setting Maximum
 seq r6 r6 1
 and r5 r5 r6
-beqz r5 91
-sub r5 r2 1
-add r5 r1 r5
-get r5 db r5
-sbn 1155865682 r5 Open 1
+beqz r5 92
 move r5 0
 slt r6 r5 r4
-beqz r6 87
+beqz r6 92
+sub r6 r2 1
+add r6 r1 r6
+get r6 db r6
+sbn 1155865682 r6 Open 1
+yield
+sub r6 r2 1
+add r6 r1 r6
+get r6 db r6
+sbn 1155865682 r6 Open 0
 yield
 add r6 r5 1
 move r5 r6
-j 81
-sub r5 r2 1
-add r5 r1 r5
-get r5 db r5
-sbn 1155865682 r5 Open 0
+j 77
 j 37
 j 9999
 

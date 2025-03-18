@@ -88,12 +88,13 @@ void Main()
         }
         if(idx != 0 & DevicesOfType(BUTTON).WithName(OREBUTTON).Setting.Maximum == 1)
         {
-            DevicesOfType(SILO).WithName(silos[idx - 1]).Open = 1;
             for(var i = 0; i < amount; i = i + 1)
             {
+                DevicesOfType(SILO).WithName(silos[idx - 1]).Open = 1;
                 yield;
+                DevicesOfType(SILO).WithName(silos[idx - 1]).Open = 0;
+                yield; 
             }
-            DevicesOfType(SILO).WithName(silos[idx - 1]).Open = 0;
         }
 
     }
