@@ -1,3 +1,4 @@
+const light = 797794350;
 
 const led = -815193061;
 const tradeLed = "Trade Led";
@@ -87,6 +88,8 @@ void Main()
         DevicesOfType(base).On = on;
         DevicesOfType(vending).WithName(tradeVending).On = on;
         DevicesOfType(led).WithName(tradeLed).On = on;
+        DevicesOfType(light).On = on;
+        
         if(!on)
         {
             continue;

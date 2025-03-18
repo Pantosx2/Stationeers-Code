@@ -573,7 +573,7 @@ move r3 0
 move r4 0
 move r5 0
 sbn -815193061 1129546016 Setting 0
-beqz 1 112
+beqz 1 113
 yield
 lbn r6 321604921 1400736518 Setting Maximum
 sb 439026183 On r6
@@ -581,14 +581,15 @@ sbn -626563514 -306354595 On r6
 sb -2066405918 On r6
 sbn -443130773 1723557620 On r6
 sbn -815193061 1129546016 On r6
+sb 797794350 On r6
 seqz r6 r6
-beqz r6 18
+beqz r6 19
 j 7
 lb r6 439026183 SignalID Maximum
 move r3 r6
 lb r6 439026183 InterrogationProgress Maximum
 sne r6 r6 1
-beqz r6 101
+beqz r6 102
 move r1 20
 sbn -815193061 1129546016 Setting 0
 move r2 0
@@ -596,11 +597,11 @@ lb r6 439026183 SignalStrength Maximum
 seq r6 r6 -1
 slt r7 r2 30
 and r6 r6 r7
-beqz r6 35
+beqz r6 36
 add r6 r2 1
 move r2 r6
 sleep 1
-j 26
+j 27
 lb r6 439026183 SignalStrength Maximum
 move r4 r6
 move r0 0
@@ -609,13 +610,13 @@ lb r7 439026183 MinimumWattsToContact Maximum
 sle r6 r6 r7
 seqz r7 r0
 and r6 r6 r7
-beqz r6 90
+beqz r6 91
 lb r6 439026183 MinimumWattsToContact Maximum
 sgt r6 r6 7000
 lbn r7 321604921 1400736518 Setting Maximum
 seq r7 r7 0
 or r6 r6 r7
-beqz r6 51
+beqz r6 52
 move r0 1
 sbn -815193061 1129546016 Setting 2
 lb r6 439026183 Horizontal Maximum
@@ -623,50 +624,50 @@ add r6 r6 r1
 sb 439026183 Horizontal r6
 lb r6 439026183 Idle Maximum
 seq r6 r6 0
-beqz r6 60
+beqz r6 61
 yield
-j 55
+j 56
 move r5 r4
 move r2 0
 lb r6 439026183 SignalStrength Maximum
 seq r6 r6 -1
 slt r7 r2 30
 and r6 r6 r7
-beqz r6 71
+beqz r6 72
 add r6 r2 1
 move r2 r6
 sleep 1
-j 62
+j 63
 lb r6 439026183 SignalStrength Maximum
 move r4 r6
 seq r6 r4 -1
-beqz r6 84
+beqz r6 85
 lb r6 439026183 Horizontal Maximum
 add r6 r6 30
 sb 439026183 Horizontal r6
 lb r6 439026183 Idle Maximum
 seq r6 r6 0
-beqz r6 83
+beqz r6 84
 yield
-j 78
+j 79
 move r0 1
 sgt r6 r4 r5
-beqz r6 89
+beqz r6 90
 div r6 r1 2
 mul r6 -1 r6
 move r1 r6
-j 38
+j 39
 seq r6 r0 0
-beqz r6 100
+beqz r6 101
 sbn -815193061 1129546016 Setting 1
 sb 439026183 Activate 0
 lb r6 439026183 InterrogationProgress Maximum
 sne r6 r6 1
-beqz r6 99
+beqz r6 100
 sb 439026183 Activate 1
-j 94
+j 95
 sb 439026183 Activate 0
-j 111
+j 112
 move r1 90
 sbn -815193061 1129546016 Setting -1
 lb r0 439026183 Horizontal Maximum
@@ -674,9 +675,9 @@ add r0 r0 r1
 sb 439026183 Horizontal r0
 lb r0 439026183 Idle Maximum
 seq r0 r0 0
-beqz r0 111
+beqz r0 112
 yield
-j 106
+j 107
 j 7
 j 9999
 
