@@ -1,0 +1,68 @@
+alias sensor d0
+alias analyzer d1
+beqz 1 67
+yield
+l r13 sensor Pressure
+l r12 sensor Temperature
+l r11 sensor RatioOxygen
+l r10 sensor RatioCarbonDioxide
+l r9 sensor RatioPollutant
+l r8 sensor RatioNitrousOxide
+move r7 0
+slt r6 r11 0.2
+slt r5 r13 95
+or r6 r6 r5
+beqz r6 17
+sbn -1129453144 -2009316918 Mode 0
+sbn -1129453144 -2009316918 On 1
+sgt r6 r13 105
+beqz r6 21
+sbn -321403609 -2009316918 Mode 1
+sbn -321403609 -2009316918 On 1
+slt r6 r13 101
+sgt r13 r13 99
+and r13 r6 r13
+sgt r11 r11 0.2
+and r13 r13 r11
+beqz r13 28
+sbn -321403609 -2009316918 On 0
+slt r13 r10 0.20
+beqz r13 32
+sbn -348054045 -1074943586 On 1
+j 33
+sbn -348054045 -1074943586 On 0
+sgt r13 r9 0.00001
+sgt r11 r8 0.00001
+or r13 r13 r11
+beqz r13 39
+sbn -348054045 372304012 On 1
+j 40
+sbn -348054045 372304012 On 0
+sgt r13 r12 299.15
+beqz r13 45
+move r7 0
+sbn -1280984102 -1985635137 On 1
+j 49
+slt r13 r12 298.15
+beqz r13 49
+move r7 1
+sbn -1280984102 -1985635137 On 0
+slt r13 r12 297.15
+beqz r13 54
+move r7 0
+sbn -1280984102 1726240876 On 1
+j 58
+sgt r13 r12 298.15
+beqz r13 58
+move r7 1
+sbn -1280984102 1726240876 On 0
+seq r13 r7 1
+beqz r13 66
+l r13 analyzer Pressure
+sgt r13 r13 0
+beqz r13 65
+sbn -321403609 997285068 On 1
+j 66
+sbn -321403609 997285068 On 0
+j 2
+j 9999

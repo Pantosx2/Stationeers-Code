@@ -1,0 +1,69 @@
+move r0 0
+move r1 0
+move r2 0
+move r3 0
+move r4 0
+move r5 0
+move r6 0
+move r7 0
+move r8 0
+move r9 0
+move r10 0
+push r10
+push r9
+push r8
+push r7
+push r6
+push r5
+push r4
+push r3
+push r2
+push r1
+push r0
+jal 46
+pop r0
+pop r1
+pop r2
+pop r3
+pop r4
+pop r5
+pop r6
+pop r7
+pop r8
+pop r9
+pop r10
+move r0 1
+move r1 2
+move r2 3
+move r3 4
+move r4 5
+move r5 6
+move r6 7
+move r7 8
+move r8 9
+move r9 10
+move r10 11
+j 9999
+push ra
+move r0 0
+move r1 0
+move r2 0
+move r3 0
+push r3
+push r2
+push r1
+push r0
+jal 66
+pop r0
+pop r1
+pop r2
+pop r3
+move r0 1
+move r1 2
+move r2 3
+move r3 4
+pop ra
+j ra
+push ra
+pop ra
+j ra

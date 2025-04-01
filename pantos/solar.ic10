@@ -1,0 +1,26 @@
+alias SunSensor d0
+move r13 0
+move r12 0
+move r11 0
+beqz 1 25
+yield
+l r10 SunSensor Horizontal
+move r13 r10
+l r10 SunSensor Vertical
+move r12 r10
+sub r10 90 r12
+move r12 r10
+add r10 r13 90
+move r13 r10
+sge r10 r13 180
+slt r9 r13 0
+or r10 r10 r9
+beqz r10 19
+move r13 0
+sub r10 r13 180
+move r11 r10
+sbn -1545574413 -1211016521 Horizontal r11
+sbn -1545574413 -724093330 Horizontal r13
+sb -1545574413 Vertical r12
+j 4
+j 9999

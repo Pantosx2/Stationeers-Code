@@ -1,0 +1,119 @@
+move r13 0
+move r12 10
+move r11 0
+move r10 0
+move r9 0
+sbn -815193061 1129546016 Setting 0
+beqz 1 61
+yield
+jal 79
+lb r8 439026183 SignalID Maximum
+move r11 r8
+lb r8 439026183 InterrogationProgress Maximum
+seq r8 r8 1
+beqz r8 19
+sbn -815193061 1129546016 Setting 1
+move r12 90
+push r12
+jal 95
+j 6
+move r12 20
+jal 62
+pop r8
+move r10 r8
+move r13 0
+lb r8 439026183 WattsReachingContact Maximum
+lb r7 439026183 MinimumWattsToContact Maximum
+sle r8 r8 r7
+seqz r7 r13
+and r8 r8 r7
+beqz r8 50
+sbn -815193061 1129546016 Setting 2
+jal 79
+push r12
+jal 95
+move r9 r10
+jal 62
+pop r8
+move r10 r8
+lb r8 439026183 MinimumWattsToContact Maximum
+sgt r8 r8 7000
+seq r7 r10 -1
+or r8 r8 r7
+beqz r8 44
+move r13 1
+sgt r8 r10 r9
+beqz r8 49
+div r8 r12 2
+mul r8 -1 r8
+move r12 r8
+j 24
+seq r8 r13 0
+beqz r8 60
+sbn -815193061 1129546016 Setting 3
+sb 439026183 Activate 0
+lb r8 439026183 InterrogationProgress Maximum
+sne r8 r8 1
+beqz r8 59
+sb 439026183 Activate 1
+j 54
+sb 439026183 Activate 0
+j 6
+j 9999
+push ra
+move r0 0
+lb r1 439026183 SignalStrength Maximum
+seq r1 r1 -1
+slt r2 r0 30
+and r1 r1 r2
+beqz r1 73
+add r1 r0 1
+move r0 r1
+sleep 1
+j 64
+lb r0 439026183 SignalStrength Maximum
+move r15 r0
+j 76
+pop ra
+push r15
+j ra
+push ra
+beqz 1 93
+yield
+lbn r0 321604921 1400736518 Setting Maximum
+sb 439026183 On r0
+sbn -626563514 -306354595 On r0
+sb -2066405918 On r0
+sbn -443130773 1723557620 On r0
+sbn -815193061 1129546016 On r0
+sb 797794350 On r0
+seq r0 r0 1
+beqz r0 92
+j 93
+j 80
+pop ra
+j ra
+pop r0
+push ra
+lb r1 439026183 Horizontal Maximum
+add r0 r1 r0
+sb 439026183 Horizontal r0
+lb r0 439026183 Idle Maximum
+seq r0 r0 0
+beqz r0 105
+yield
+j 100
+pop ra
+j ra
+pop r0
+push ra
+lb r1 439026183 Vertical Maximum
+add r0 r1 r0
+sb 439026183 Vertical r0
+lb r0 439026183 Idle Maximum
+seq r0 r0 0
+beqz r0 117
+yield
+j 112
+pop ra
+j ra

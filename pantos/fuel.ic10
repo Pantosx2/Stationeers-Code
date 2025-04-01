@@ -1,0 +1,12 @@
+alias analyzer d0
+alias mixer d1
+beqz 1 11
+l r13 analyzer Pressure
+slt r13 r13 40000
+beqz r13 9
+s mixer Setting 33.33333333
+s mixer On 1
+j 10
+s mixer On 0
+j 2
+j 9999
