@@ -68,8 +68,6 @@ real getSeeding(idx)
 
 void Main()
 {
-    var temp=0;
-
     while(true)
     {
         yield;

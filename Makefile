@@ -1,4 +1,3 @@
-SHELL := "C:/Program Files/Git/bin/bash.exe"
 
 ICC= ./bin/ic11.exe
 ICP= ./bin/ic11_pantos.exe
@@ -14,8 +13,9 @@ default: move
 
 move: all
 	mv $(SRC)*.ic10 $(OUT)
+	rm -rf $(LOG)
 
-all: 
+all: pantos
 	$(ICC) $(SRC) $(ICCFLAGS) > $(LOG)
 
 pantos: pantos_all
@@ -23,6 +23,3 @@ pantos: pantos_all
 
 pantos_all:
 	$(ICP) $(SRC) $(ICCFLAGS) > $(LOG)
-
-get:
-	cp "C:\5IC11\ic11\publish\ic11.exe" ./bin/ic11_pantos.exe

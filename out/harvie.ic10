@@ -1,34 +1,33 @@
 alias Light d0
 alias Sun d1
-move r0 0
-beqz 1 31
+beqz 1 30
 yield
-jal 42
+jal 41
 push 1
-jal 81
+jal 80
 pop r0
 seq r0 r0 -1
-beqz r0 12
-jal 49
+beqz r0 11
+jal 48
 push 2
-jal 81
+jal 80
 pop r0
 seq r0 r0 -1
-beqz r0 18
-jal 60
+beqz r0 17
+jal 59
 push 1
-jal 32
+jal 31
 pop r0
 sgt r0 r0 -1
-beqz r0 24
-jal 71
+beqz r0 23
+jal 70
 push 2
-jal 32
+jal 31
 pop r0
 sgt r0 r0 -1
-beqz r0 30
-jal 76
-j 3
+beqz r0 29
+jal 75
+j 2
 j 9999
 pop r0
 push ra
@@ -36,7 +35,7 @@ seq r0 r0 1
 select r0 r0 749835667 -1246182359
 lbns r1 -1841632400 r0 0 Seeding Maximum
 move r15 r1
-j 39
+j 38
 pop ra
 push r15
 j ra
@@ -53,7 +52,7 @@ yield
 lbns r1 958056199 -365683961 0 Occupied Maximum
 move r0 r1
 sne r0 r0 0
-beqz r0 58
+beqz r0 57
 sbn 958056199 -365683961 Plant 1
 sleep 10
 pop ra
@@ -64,7 +63,7 @@ yield
 lbns r1 958056199 1933396669 0 Occupied Maximum
 move r0 r1
 sne r0 r0 0
-beqz r0 69
+beqz r0 68
 sbn 958056199 1933396669 Plant 1
 sleep 10
 pop ra
@@ -85,7 +84,7 @@ seq r0 r0 1
 select r0 r0 749835667 -1246182359
 lbns r1 -1841632400 r0 0 Mature Maximum
 move r15 r1
-j 88
+j 87
 pop ra
 push r15
 j ra
