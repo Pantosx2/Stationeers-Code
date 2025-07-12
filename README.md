@@ -7,7 +7,7 @@ This repository contains my collection of scripts for the [Stationeers](https://
 - **bin/**  
     Contains the original compiler and my modified version. The changes I made are documented in a [pull request](https://github.com/Raibo/ic11/pull/8) in the original repo.
 
-- **src/**
+- **src/**  
     Contains all IC11 source code scripts. 
 
 - **out/**  
