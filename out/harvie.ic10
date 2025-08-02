@@ -29,41 +29,41 @@ beqz r0 29
 jal 75
 j 2
 j 9999
-pop r0
+pop r1
 push ra
-seq r0 r0 1
-select r0 r0 749835667 -1246182359
-lbns r1 -1841632400 r0 0 Seeding Maximum
-move r15 r1
+seq r1 r1 1
+select r1 r1 749835667 -1246182359
+lbns r2 -1841632400 r1 0 Seeding Maximum
+move r15 r2
 j 38
 pop ra
 push r15
 j ra
 push ra
-l r0 Sun SolarAngle
-slt r0 r0 115
-select r0 r0 1 0
-s Light On r0
+l r1 Sun SolarAngle
+slt r1 r1 115
+select r1 r1 1 0
+s Light On r1
 pop ra
 j ra
 push ra
-move r0 0
+move r1 0
 yield
-lbns r1 958056199 -365683961 0 Occupied Maximum
-move r0 r1
-sne r0 r0 0
-beqz r0 57
+lbns r2 958056199 -365683961 0 Occupied Maximum
+move r1 r2
+sne r1 r1 0
+beqz r1 57
 sbn 958056199 -365683961 Plant 1
 sleep 10
 pop ra
 j ra
 push ra
-move r0 0
+move r1 0
 yield
-lbns r1 958056199 1933396669 0 Occupied Maximum
-move r0 r1
-sne r0 r0 0
-beqz r0 68
+lbns r2 958056199 1933396669 0 Occupied Maximum
+move r1 r2
+sne r1 r1 0
+beqz r1 68
 sbn 958056199 1933396669 Plant 1
 sleep 10
 pop ra
@@ -78,12 +78,12 @@ sbn 958056199 1933396669 Harvest 1
 sleep 10
 pop ra
 j ra
-pop r0
+pop r1
 push ra
-seq r0 r0 1
-select r0 r0 749835667 -1246182359
-lbns r1 -1841632400 r0 0 Mature Maximum
-move r15 r1
+seq r1 r1 1
+select r1 r1 749835667 -1246182359
+lbns r2 -1841632400 r1 0 Mature Maximum
+move r15 r2
 j 87
 pop ra
 push r15

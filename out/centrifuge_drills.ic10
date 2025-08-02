@@ -19,9 +19,9 @@ j 6
 j 9999
 push ra
 yield
-l r0 lever Setting
-seqz r0 r0
-sb 265720906 On r0
+l r2 lever Setting
+seqz r2 r2
+sb 265720906 On r2
 pop ra
 j ra
 push ra
@@ -29,18 +29,18 @@ sb 265720906 On 0
 s centrifuge Open 1
 s centrifuge CombustionLimiter 0
 s centrifuge Throttle 0
-l r0 centrifuge Reagents
-sgt r0 r0 0
-l r1 centrifuge Stress
-sgt r1 r1 0
-or r0 r0 r1
-l r1 lever Setting
-sne r1 r1 0
-or r0 r0 r1
-l r1 centrifuge Rpm
-sgt r1 r1 0
-or r0 r0 r1
-beqz r0 45
+l r2 centrifuge Reagents
+sgt r2 r2 0
+l r3 centrifuge Stress
+sgt r3 r3 0
+or r2 r2 r3
+l r3 lever Setting
+sne r3 r3 0
+or r2 r2 r3
+l r3 centrifuge Rpm
+sgt r3 r3 0
+or r2 r2 r3
+beqz r2 45
 yield
 j 31
 pop ra
@@ -50,44 +50,44 @@ s centrifuge Open 0
 s centrifuge On 1
 s centrifuge Throttle 10
 s centrifuge CombustionLimiter 10
-l r0 centrifuge Rpm
-slt r0 r0 250
-beqz r0 57
+l r3 centrifuge Rpm
+slt r3 r3 250
+beqz r3 57
 jal 19
 j 52
 s centrifuge Throttle 20
 s centrifuge CombustionLimiter 20
-l r0 centrifuge Rpm
-slt r0 r0 280
-beqz r0 64
+l r3 centrifuge Rpm
+slt r3 r3 280
+beqz r3 64
 jal 19
 j 59
 s centrifuge Throttle 40
 s centrifuge CombustionLimiter 40
-l r0 centrifuge Rpm
-slt r0 r0 340
-beqz r0 71
+l r3 centrifuge Rpm
+slt r3 r3 340
+beqz r3 71
 jal 19
 j 66
 s centrifuge Throttle 60
 s centrifuge CombustionLimiter 60
-l r0 centrifuge Rpm
-slt r0 r0 425
-beqz r0 78
+l r3 centrifuge Rpm
+slt r3 r3 425
+beqz r3 78
 jal 19
 j 73
 s centrifuge Throttle 80
 s centrifuge CombustionLimiter 80
-l r0 centrifuge Rpm
-slt r0 r0 470
-beqz r0 85
+l r3 centrifuge Rpm
+slt r3 r3 470
+beqz r3 85
 jal 19
 j 80
 s centrifuge Throttle 100
 s centrifuge CombustionLimiter 100
-l r0 centrifuge Rpm
-slt r0 r0 470
-beqz r0 92
+l r3 centrifuge Rpm
+slt r3 r3 470
+beqz r3 92
 jal 19
 j 87
 pop ra
@@ -97,9 +97,9 @@ sb 265720906 On 0
 s centrifuge Throttle 0
 s centrifuge CombustionLimiter 0
 s centrifuge On 0
-l r0 centrifuge Rpm
-sgt r0 r0 0
-beqz r0 104
+l r2 centrifuge Rpm
+sgt r2 r2 0
+beqz r2 104
 yield
 j 99
 s centrifuge Open 1
