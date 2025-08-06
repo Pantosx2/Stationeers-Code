@@ -1,39 +1,18 @@
-move r0 0
-move r1 0
-move r2 0
-move r3 0
-move r4 0
-move r5 0
-move r6 0
-move r7 0
-move r8 0
-move r9 0
-move r10 0
-jal 24
-move r0 1
-move r1 2
-move r2 3
-move r3 4
-move r4 5
-move r5 6
-move r6 7
-move r7 8
-move r8 9
-move r9 10
-move r10 11
+move r0 sp
+add r15 r15 3
+push 1
+push 2
+push 3
+beqz 1 14
+beqz 0 11
+push r15
+jal 15
+pop r15
+j 13
+add r0 r0 2
+put db r0 42
+j 5
 j 9999
-push ra
-move r11 0
-move r12 0
-move r13 0
-move r14 0
-jal 36
-move r11 1
-move r12 2
-move r13 3
-move r14 4
-pop ra
-j ra
 push ra
 pop ra
 j ra
