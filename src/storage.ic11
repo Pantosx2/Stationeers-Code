@@ -44,6 +44,41 @@ const SDBSiloVolatiles = "SDB Silo Volatiles";
 const SDBSiloWater = "SDB Silo Water";
 const SDBSiloNitrice = "SDB Silo Nitrice";
 
+void allOff()
+{
+    DevicesOfType(CONSOLE).WithName(OREDISPLAY).On = 0;
+    DevicesOfType(LED).WithName(ORECOUNT).On = 0;
+    DevicesOfType(LED).WithName(AMOUNTCOUNT).On = 0;
+    DevicesOfType(DIAL).WithName(AMOUNTDIAL).Setting = 0;
+}
+
+void allOn()
+{
+    DevicesOfType(CONSOLE).WithName(OREDISPLAY).On = 1;
+    DevicesOfType(LED).WithName(ORECOUNT).On = 1;
+    DevicesOfType(LED).WithName(AMOUNTCOUNT).On = 1;
+}
+
+void dispence(ore, amount)
+{
+    for(var i = 0; i < amount; i = i + 1)
+    {
+        DevicesOfType(SILO).WithName(ore).Open = 1;
+        yield;
+        DevicesOfType(SILO).WithName(ore).Open = 0;
+        yield; 
+    }
+}
+
+void setAll(stored, amount)
+{
+    DevicesOfType(LED).WithName(ORECOUNT).Setting = 50 * stored;
+
+    DevicesOfType(DIAL).WithName(AMOUNTDIAL).Mode = stored;
+
+    DevicesOfType(LED).WithName(AMOUNTCOUNT).Setting = 50 * amount;
+}
+
 void Main()
 {
     var ores={ Iron, Coal, Copper, Gold, Silicon, Cobalt, Lead, Nickel, Silver, Uranium, Oxite, Volatiles, Water, Nitrice };
@@ -58,7 +93,7 @@ void Main()
     while(true)
     {
         yield;
-        idx = DevicesOfType(DIAL).WithName(OREDIAL).Setting.Maximum;
+        idx = DevicesOfType(DIAL).WithName(OREDIAL).Setting.Maximum - 1;
         amount = DevicesOfType(DIAL).WithName(AMOUNTDIAL).Setting.Maximum;
         if(amount > stored)
         {
@@ -67,36 +102,21 @@ void Main()
         }
         if(idx == 0) 
         {
-            DevicesOfType(CONSOLE).WithName(OREDISPLAY).On = 0;
-            DevicesOfType(LED).WithName(ORECOUNT).On = 0;
-            DevicesOfType(LED).WithName(AMOUNTCOUNT).On = 0;
-            DevicesOfType(DIAL).WithName(AMOUNTDIAL).Setting = 0;
+            allOff();
         }
         else
         {
-            DevicesOfType(CONSOLE).WithName(OREDISPLAY).On = 1;
-            this.Setting = ores[idx - 1];
+            allOn();
 
-            DevicesOfType(LED).WithName(ORECOUNT).On = 1;
-            stored = DevicesOfType(SILO).WithName(silos[idx - 1]).Quantity.Maximum;
-            DevicesOfType(LED).WithName(ORECOUNT).Setting = 50 * stored;
+            this.Setting = ores[idx];
+            stored = DevicesOfType(SILO).WithName(silos[idx]).Quantity.Maximum;
 
-            DevicesOfType(DIAL).WithName(AMOUNTDIAL).Mode = stored;
-
-            DevicesOfType(LED).WithName(AMOUNTCOUNT).On = 1;
-            DevicesOfType(LED).WithName(AMOUNTCOUNT).Setting = 50 * amount;
-        }
-        if(idx != 0 & DevicesOfType(BUTTON).WithName(OREBUTTON).Setting.Maximum == 1)
-        {
-            for(var i = 0; i < amount; i = i + 1)
+            setAll(stored, amount);
+        
+            if(DevicesOfType(BUTTON).WithName(OREBUTTON).Setting.Maximum == 1)
             {
-                DevicesOfType(SILO).WithName(silos[idx - 1]).Open = 1;
-                yield;
-                DevicesOfType(SILO).WithName(silos[idx - 1]).Open = 0;
-                yield; 
+                dispence(silos[idx], amount);
             }
         }
-
     }
-
 }
