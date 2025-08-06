@@ -1,4 +1,3 @@
-
 ICC= ./bin/ic11.exe
 ICCFLAGS= -w
 
@@ -13,6 +12,7 @@ default: all
 all: compile
 	mv $(SRC)*.ic10 $(OUT)
 	rm -rf $(LOG)
+	./bin/check.sh
 
 compile:
 	$(ICC) $(SRC) $(ICCFLAGS) > $(LOG)
